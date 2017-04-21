@@ -82,7 +82,7 @@ These would represent the students name and which group they belong to.
 To help me understand what attributes I needed, I used a very handy Arrow tool by apcjones. This helped me visualise the nodes and how each one would relate to each other. Which in turn helped me figure out the node relationships.
 Here is a image of apcjones design.
 
-![alt text](DatabaseDesign2.PNG)
+![alt text](Images/DatabaseDesign2.PNG)
 
 As you can see from the image above each node represents a certain type of data and each edge represents their relationship. Each Node has attribute which are in the text boxes beside them.
 
@@ -118,7 +118,7 @@ I entered the course node manually without a csv as their was only one instance 
 
 Here is a example of a csv file to create nodes:
 
-![alt text](CSVScreenShot.png)
+![alt text](Images/CSVScreenShot.png)
 
 As you can see above Line 1 Consists of the headers for each column and each column is separated by a comma.
 In this example the headers represent the name of the student and the group name.
@@ -152,7 +152,7 @@ I would require:
 
 Here is a example of a csv file I created to make a Relationship between Time Slots and Room names/numbers:
 
-![alt text](CSVScreenShot2.png)
+![alt text](Image/CSVScreenShot2.png)
 
 As you can see above there is no headers this time.
 
@@ -211,19 +211,23 @@ I have provided more Queries in my CommandsAndQueries.txt file which is in my re
 [Top](#contents)
 ## Conclusion<a name = "conclusion"></a>
 
-how i found the project
-would i recommend it
-references
+
 
 [Top](#contents)
 ## References<a name = "references"></a>
 
-https://neo4j.com/developer/guide-import-csv/
+For loading of csv files to neo4j  
+https://neo4j.com/developer/guide-import-csv/  
 
-http://stackoverflow.com/questions/19016947/neo4j-how-do-i-delete-a-specific-relationship-with-cypher
+How to delete relationships and nodes in cypher  
+http://stackoverflow.com/questions/19016947/neo4j-how-do-i-delete-a-specific-relationship-with-cypher  
 
+How to remove tags using regular expressions and Find and Replace functions  
+https://www.rhyous.com/2012/12/11/removing-all-xml-or-html-tags-using-notepad/
+
+Also Neo4j Desktop which has loads of documentation on how to get started
 ### Images
-
+Neo4j Image
 https://pbs.twimg.com/profile_images/799385008427274240/SecICcL4.jpg
 
 [Top](#contents)
