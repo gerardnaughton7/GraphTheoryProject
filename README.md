@@ -36,8 +36,9 @@ For more information about neo4j here are some links that may help:
 * https://en.wikipedia.org/wiki/Neo4j
 * https://neo4j.com/top-ten-reasons/
 
-
+[Top](#contents)
 ## Data to be stored <a name = "data"></a>
+
 Firstly before I designed the database I worked out the essential items needed to populate a Time Table.
 
 * TimeSlots - List of Times for each class. These would be in hour intervals
@@ -53,14 +54,21 @@ http://timetable.gmit.ie/.
 For groups and Students I will create sample data and apply it to my database.
 For my prototype I will be basing my database on our current semester 6 Computer Software and development time table.
 
+[Top](#contents)
 ## How Data was retrieved <a name = "dataRetrieval"></a>
 
-
-How we retrieved the data from GMIT. Galway mayo institute of technology - web timetables.
+As I said before I would obtain my data from GMIT. Galway mayo institute of technology - web timetables.
 http://timetable.gmit.ie/.
 
+After finding the right information needed I clicked inspect element of the webpage and copied and pasted the information I needed into notepad++.
 
+Once I had it in notepad++ I was able to remove html tags, white spaces and other unwanted information caught in between with Find and Replace all functions(Ctrl f shortcut).
 
+I also found as a handy tool was how notepad++ allows you by pressing alt and dragging the mouse to select items of text vertically. This was very handy when removing large lumps of unwanted text.
+
+Once the necessary information was collected it was ready to be inputted into my csv files for upload to the database.
+
+[Top](#contents)
 ## Design Strategy <a name = "strategy"></a>
 
 After figuring out what data needed to be stored I moved on to the design.  
@@ -86,6 +94,7 @@ These relationships will allow me to query my database.
 
 As well as creating my relationships with the Time Slot I also created relationships between Lecturer and Module represented by *Teaches*, Student and Student Group represented by *Belongs*, Student and Course represented by *Enrolled* and finally Module and Course represented by *ModulesFor*. All these relationship helps me query the database easier and require less complicated Queries.
 
+[Top](#contents)
 ## Implementation <a name = "implementation"></a>
 
 After looking into neo4j and watching tutorials, I realised the best way to input the data/node and relationships between them consistently and easily would be to upload the data into neo4j using CSV files.
@@ -173,15 +182,48 @@ Return Student, Group
 
 Using these 3 cypher command and changing them depending on the different nodes and relationships I was able to implement my data and create my graph database.
 
+[Top](#contents)
 ## Querying the Graph database <a name = "queries"></a>
 
-//queries i used
+Here are some of the Queries I performed after creating my database:
+
+Query to find what Lecturer Teaches Graph Theory:
+```
+MATCH(m:Module)-[:Teaches]-(l:Lecturer)
+WHERE m.Name = "Graph Theory"
+RETURN l
+```
+
+Query to see what time does Gerard have graph theory on a friday:
+```
+MATCH (s:Student {Name:"Gerard"})-[r1:Belongs]->(g:Group)-[r2:Attends]->(t:Time)<-[r3:Taught]-(m:Module)
+WHERE t.Name CONTAINS 'fri' AND m.Name = 'Graph Theory'
+RETURN t
+```
+
+Query to see what class room and time does Student Gerard have on a wednesday with a class room greater than 90
+```
+MATCH (s:Student {Name: "Gerard"})-[r1:Belongs]->(g:Group)-[r2:Attends]->(t:Time)<-[r3:UseRoom]-(r:Room) WHERE t.Name CONTAINS 'wed' AND toInt(r.Capacity) >= 90
+RETURN t,r
+```
+I have provided more Queries in my CommandsAndQueries.txt file which is in my repository.
+
+[Top](#contents)
 ## Conclusion<a name = "conclusion"></a>
+
 how i found the project
 would i recommend it
 references
 
+[Top](#contents)
 ## References<a name = "references"></a>
+
 https://neo4j.com/developer/guide-import-csv/
+
+http://stackoverflow.com/questions/19016947/neo4j-how-do-i-delete-a-specific-relationship-with-cypher
+
 ### Images
+
 https://pbs.twimg.com/profile_images/799385008427274240/SecICcL4.jpg
+
+[Top](#contents)
