@@ -7,12 +7,13 @@ Graph Theory project to create and design a Neo4j database and prototype for a t
 [Data to be Stored](#data)  
 [How data was retrieved](#dataRetrieval)  
 [Design Strategy](#strategy)  
-[Implementation](#implementation)  
-[Conclusion](#conclusion)  
+[Implementation](#implementation)
+[Querying the Database](#queries)    
+[Conclusion](#conclusion)   
 [References](#references)
 
 ## Introduction <a name = "intro"></a>
-In my project I will design neo4j database and outline the steps I took to achieve this. This includes going through what data was needed, How i would retrieve the data that needed to be stored, my design strategy for the database eg node, edges and there attributes and the relationship between them, how to implement the design and finally conclusion.
+In my project I will design neo4j database and outline the steps I took to achieve this. This includes going through what data was needed, How I would retrieve the data that needed to be stored, my design strategy for the database eg node, edges and there attributes and the relationship between them, how to implement the design and finally conclusion.
 
 ## What is Neo4j <a name = "neo4j"></a>
 ![alt text](https://pbs.twimg.com/profile_images/799385008427274240/SecICcL4.jpg)
@@ -62,14 +63,15 @@ http://timetable.gmit.ie/.
 
 ## Design Strategy <a name = "strategy"></a>
 
-After figuring out what data need to be stored I moved on to the design.
+After figuring out what data needed to be stored I moved on to the design.  
+
 So for each piece of data to be stored it would be stored as a specific type of node.
-For Example: Student would represent the type of node.
+For Example: Student would represent that type of node.
 Then each Student node would contain attributes.
 For my Student node I gave it 2 attributes, Name and Group.
 These would represent the students name and which group they belong to.
 
-To help me understand what attributes I needed and I used a very handy Arrow tool by apcjones. This helped me visualise the nodes and how each one would relate to each other. Which in turn helped me figure out the node relationships.
+To help me understand what attributes I needed, I used a very handy Arrow tool by apcjones. This helped me visualise the nodes and how each one would relate to each other. Which in turn helped me figure out the node relationships.
 Here is a image of apcjones design.
 
 ![alt text](DatabaseDesign2.PNG)
@@ -84,23 +86,19 @@ These relationships will allow me to query my database.
 
 As well as creating my relationships with the Time Slot I also created relationships between Lecturer and Module represented by *Teaches*, Student and Student Group represented by *Belongs*, Student and Course represented by *Enrolled* and finally Module and Course represented by *ModulesFor*. All these relationship helps me query the database easier and require less complicated Queries.
 
-
-
-how you would like to implement the data into the neo4j database and relationships etc
-how we would use the database to query these using cypher
-
 ## Implementation <a name = "implementation"></a>
-how we input the information to the database
-how we set up the relationships etc
-how someone would query the database
-types of queries we used
 
+//implementation of data to database
+
+## Querying the Graph database <a name = "queries"></a>
+
+//queries i used
 ## Conclusion<a name = "conclusion"></a>
 how i found the project
 would i recommend it
 references
 
 ## References<a name = "references"></a>
-
+https://neo4j.com/developer/guide-import-csv/
 ### Images
 https://pbs.twimg.com/profile_images/799385008427274240/SecICcL4.jpg
