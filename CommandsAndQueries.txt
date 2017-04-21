@@ -1,0 +1,120 @@
+Here is a Text file with the command and queries i used to create and query my database.
+
+//groups
+LOAD CSV WITH HEADERS FROM "file:///C:/Group.csv" AS csvLine
+CREATE (g:Group { Name: csvLine.name})
+
+//students
+LOAD CSV WITH HEADERS FROM "file:///C:/Student.csv" AS csvLine
+CREATE (s:Student { Name: csvLine.name, Group: csvLine.group})
+
+//TimeSlots
+LOAD CSV WITH HEADERS FROM "file:///C:/Time.csv" AS csvLine
+CREATE (t:Time { Name: csvLine.name})
+
+//lecturers
+LOAD CSV WITH HEADERS FROM "file:///C:/Lecture.csv" AS csvLine
+CREATE (l:Lecturer { Name: csvLine.name})
+
+//Rooms
+LOAD CSV WITH HEADERS FROM "file:///C:/Rooms.csv" AS csvLine
+CREATE (r:Room { Name: csvLine.name, Capacity: csvLine.capacity})
+
+//Modules
+LOAD CSV WITH HEADERS FROM "file:///C:/Module.csv" AS csvLine
+CREATE (l:Module { Name: csvLine.name})
+
+//create relationship between group and students and do the same for group b
+Match (Student {Group:"a"}), (Group {Name:"a"}) 
+Create(Student)-[:Belongs]->(Group) 
+Return Student, Group
+
+//create relationships using csv file for module and time
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/TimeModuleRelationship.csv" AS row
+MATCH (p1:Time {Name: toString(row[0])}), (p2:Module {Name: toString(row[1])})
+CREATE (p2)-[:Taught]->(p1);
+
+//create relationship using csv file for group and time
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/TimeGroupRelationship.csv" AS row
+MATCH (p1:Time {Name: toString(row[0])}), (p2:Group {Name: toString(row[1])})
+CREATE (p2)-[:Attends]->(p1);
+
+//Create relationship using csv for rooms and times
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/TimeRoomRelationship.csv" AS row
+MATCH (p1:Time {Name: toString(row[0])}), (p2:Room {Name: toString(row[1])})
+CREATE (p2)-[:UseRoom]->(p1);
+
+//Create relationship using csv for Lecturer and times
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/TimeLecturerRelationship.csv" AS row
+MATCH (p1:Time {Name: toString(row[0])}), (p2:Lecturer {Name: toString(row[1])})
+CREATE (p2)-[:Lectures]->(p1);
+
+//Create relationship using csv for Course and Students
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/CourseStudentRelationship.csv" AS row
+MATCH (p1:Course {Name: toString(row[1])}), (p2:Student {Name: toString(row[0])})
+CREATE (p2)-[:Enrolled]->(p1);
+
+//Create relationship using csv for Course and Module
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/ModuleCourseRelationship.csv" AS row
+MATCH (p1:Module {Name: toString(row[0])}), (p2:Course {Name: toString(row[1])})
+CREATE (p1)-[:ModulesFor]->(p2);
+
+//Create relationship using csv for Module and Lecturer
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/ModuleLecturerRelationship.csv" AS row
+MATCH (p1:Module {Name: toString(row[0])}), (p2:Course {Name: toString(row[1])})
+CREATE (p2)-[:Teaches]->(p1);
+
+
+================================Queries=========================================
+
+//query database to see what times lecturer ian is working on a monday 
+MATCH (l:Lecturer)-[r:LecturesAt]->(t:Time)
+WHERE l.Name = "Ian McLoughlin" And t.Name CONTAINS "mon"
+RETURN l,r,t
+
+//Query database to see what time database management is on a wednesday
+match (m:Module)-[:Taught]-(t:Time) 
+where m.Name = "Database Management" AND t.Name CONTAINS 'wed' 
+RETURN m,t
+
+//Query to see what rooms have a capacity over 50
+MATCH(r:Room) 
+WHERE toInt(r.Capacity) > 50 
+RETURN r
+
+//Query to find what Lecturer Teaches Graph Theory
+MATCH(m:Module)-[:Teaches]-(l:Lecturer) 
+WHERE m.Name = "Graph Theory" 
+RETURN l
+
+//Query to see what time does Gerard have graph theory on a friday
+MATCH (s:Student {Name:"Gerard"})-[r1:Belongs]->(g:Group)-[r2:Attends]->(t:Time)<-[r3:Taught]-(m:Module) 
+WHERE t.Name CONTAINS 'fri' AND m.Name = 'Graph Theory' 
+RETURN t
+
+//Query to see What course and classes student gerard does
+MATCH (s:Student {Name: "Gerard"})-[e1:Enrolled]->(c:Course)<-[m:ModulesFor]-(m2:Module) 
+RETURN s,c,m,m2
+
+//Query to see what class room and time does Student Gerard have on a wednesday with a class room greater than 90
+MATCH (s:Student {Name: "Gerard"})-[r1:Belongs]->(g:Group)-[r2:Attends]->(t:Time)<-[r3:UseRoom]-(r:Room) WHERE t.Name CONTAINS 'wed' AND toInt(r.Capacity) >= 90 
+RETURN t,r
+
+//Query to find all the modules and the lectures that teaches them
+MATCH(m:Module)-[:Teaches]-(l:Lecturer) 
+RETURN m,l
+
+//how to delete a type of relationship
+MATCH ()-[r:TAUGHT]-() 
+DELETE r
+
+//how to delete a type of node
+match (m:Module)
+REMOVE delete m

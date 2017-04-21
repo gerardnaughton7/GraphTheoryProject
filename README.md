@@ -182,6 +182,9 @@ Return Student, Group
 
 Using these 3 cypher command and changing them depending on the different nodes and relationships I was able to implement my data and create my graph database.
 
+All csv files are above in folders: CreateNodesCSVs and CreateRelationshipCSVs.
+All Commands and Queries can be found above in CommandAndQueries.txt.
+
 [Top](#contents)
 ## Querying the Graph database <a name = "queries"></a>
 
@@ -217,9 +220,7 @@ At first I found it hard to get my head around the cypher language but after fol
 
 As for my Timetable database at first it sounded a bit daunting but as explained by our lecturer Ian McLoughlin if broken into small step by step sections it becomes clear and easy how it should be done.
 
-
-
-
+In conclusion I really enjoyed working with graph database it allows for a lot more freedom unlike some other database types. It also gives great visual interpretation of data, which is a asset to the user and great for explaining how the database works to a potential client/customer.
 
 [Top](#contents)
 ## References<a name = "references"></a>
