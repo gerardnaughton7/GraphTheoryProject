@@ -50,7 +50,7 @@ Firstly before I designed the database I worked out the essential items needed t
 * Students - List of Students who are in enrolled in that course
 
 All this Data for Rooms, Lecturers and Modules will be got from the GMIT. Galway mayo institute of technology - web timetables.
-http://timetable.gmit.ie/.
+http://timetable.gmit.ie/. (You must be a student to view this link)
 For groups and Students I will create sample data and apply it to my database.
 For my prototype I will be basing my database on our current semester 6 Computer Software and development time table.
 
@@ -58,7 +58,7 @@ For my prototype I will be basing my database on our current semester 6 Computer
 ## How Data was retrieved <a name = "dataRetrieval"></a>
 
 As I said before I would obtain my data from GMIT. Galway mayo institute of technology - web timetables.
-http://timetable.gmit.ie/.
+http://timetable.gmit.ie/.(You must be a student to view this link)
 
 After finding the right information needed I clicked inspect element of the webpage and copied and pasted the information I needed into notepad++.
 
@@ -152,7 +152,7 @@ I would require:
 
 Here is a example of a csv file I created to make a Relationship between Time Slots and Room names/numbers:
 
-![alt text](Image/CSVScreenShot2.png)
+![alt text](Images/CSVScreenShot2.png)
 
 As you can see above there is no headers this time.
 
@@ -210,6 +210,14 @@ I have provided more Queries in my CommandsAndQueries.txt file which is in my re
 
 [Top](#contents)
 ## Conclusion<a name = "conclusion"></a>
+
+Having worked mainly with Mysql, it was great to see what else was out there. Neo4j is the leading Graph Database out there and with its free community edition it is great aid for students to learn.
+
+At first I found it hard to get my head around the cypher language but after following the helpful tutorials that come with neo4j desktop and some tutorials online I was learning quickly that this was easy and well designed language.
+
+As for my Timetable database at first it sounded a bit daunting but as explained by our lecturer Ian McLoughlin if broken into small step by step sections it becomes clear and easy how it should be done.
+
+
 
 
 
