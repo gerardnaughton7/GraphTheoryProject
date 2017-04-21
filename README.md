@@ -88,7 +88,90 @@ As well as creating my relationships with the Time Slot I also created relations
 
 ## Implementation <a name = "implementation"></a>
 
-//implementation of data to database
+After looking into neo4j and watching tutorials, I realised the best way to input the data/node and relationships between them consistently and easily would be to upload the data into neo4j using CSV files.
+
+In order to be able to import the CSV data to the database I would have to create a import folder in my graph database folder. In here I would place all my CSV Files.
+
+### Node Creation
+
+To begin with I started with the nodes and its attributes to be stored. I created the csv files using notepad++.
+
+I would require:
+
+* Time.csv
+* Room.csv
+* Module.csv
+* Lecturer.csv
+* Group.csv
+* Student.csv
+
+I entered the course node manually without a csv as their was only one instance for this prototype.
+
+Here is a example of a csv file to create nodes:
+
+![alt text](CSVScreenShot.png)
+
+As you can see above Line 1 Consists of the headers for each column and each column is separated by a comma.
+In this example the headers represent the name of the student and the group name.
+
+To upload the file to the database I used this Cypher command:
+
+```
+LOAD CSV WITH HEADERS FROM "file:///C:/Student.csv" AS csvLine
+CREATE (s:Student { Name: csvLine.name, Group: csvLine.group})
+```
+
+As you can see you load in the Student.csv file with its HEADERS first and then using the Create command you create a Student node with the Attributes given in the csv file.
+
+This was then repeated for the other data to be stored
+
+### Relationship Creation
+
+Creating the csv and the cypher command for the Relationships was very similar.
+
+For the CSV files everything was the same except there was no header. Each relationship was done per line and each attribute was separated by a comma.
+
+I would require:
+
+* TimeLecturerRelationship.csv
+* TimeRoomRelationship.csv
+* TimeModuleRelationship.csv
+* TimeGroupRelationship.csv
+* CourseStudentRelationship.csv
+* ModuleLecturerRelationship.csv
+* ModuleCourseRelationship.csv
+
+Here is a example of a csv file I created to make a Relationship between Time Slots and Room names/numbers:
+
+![alt text](CSVScreenShot2.png)
+
+As you can see above there is no headers this time.
+
+To upload the file to the database I used this Cypher command:
+
+```
+USING PERIODIC COMMIT
+LOAD CSV FROM "file:///C:/TimeRoomRelationship.csv" AS row
+MATCH (p1:Time {Name: toString(row[0])}), (p2:Room {Name: toString(row[1])})
+CREATE (p2)-[:UseRoom]->(p1);
+```
+
+Using Periodic Commit is not really necessary for this database as we are not using large quantities of data but is a good practice for when dealing with larger databases rather than trying to upload all the data in one go.
+
+Again we can see that we load in the specific CSV file needed but what is different is that we match the attributes using rows.
+As we work down through each row in the file they access the attribute data using  "(row[0])" which represents the first item in that row and "(row[1])" for the second.
+
+This is just another example of getting data from a file.
+
+To create the relationship between student and groups i used this command:
+
+```
+Match (Student {Group:"a"}), (Group {Name:"a"})
+Create(Student)-[:Belongs]->(Group)
+Return Student, Group
+```
+
+Using these 3 cypher command and changing them depending on the different nodes and relationships I was able to implement my data and create my graph database.
 
 ## Querying the Graph database <a name = "queries"></a>
 
